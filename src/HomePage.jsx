@@ -1,57 +1,46 @@
 import { useState } from "react";
-import Hotel from "./Hotel";
-import useHotels from "./customHooks/useHotels";
+import { useQuery } from "@tanstack/react-query";
+import HotelErrorBd from "./Hotel";
+import ErrorBoundary from "./ErrorBoundary";
+import fetchHotels from "./customHooks/fetchHotels";
+import FormFilters from "./FormFilters";
 
 const ratingArr = [1, 2, 3, 4, 5];
 
 const HomePage = () => {
-  const [hotels, loading] = useHotels("hotels?collection-id=OBMNG");
-  const [starRating, setStarRating] = useState(1);
-  const [numAdults, setNumAdults] = useState(1);
-  const [numChildren, setNumChildren] = useState(0);
+  const [filters, setFilters] = useState({
+    starRating: 1,
+    numAdults: 1,
+    numChildren: 0,
+  });
+  const { isLoading, data } = useQuery(["hotelsData"], fetchHotels);
+
+  const handleSubmit = (formData) => {
+    setFilters(formData);
+  };
+
+  if (isLoading) {
+    return <p>loading...</p>;
+  }
 
   return (
     <div>
-      <form>
-        <label htmlFor="star rating">
-          Star Rating
-          <p>{numChildren}</p>
-          <select
-            id="star rating"
-            value={starRating}
-            onChange={(e) => setStarRating(e.target.value)}
-          >
-            {ratingArr.map((star) => (
-              <option key={star}>{star}</option>
-            ))}
-          </select>
-        </label>
-        <label htmlFor="number of adults">
-          <input
-            type="number"
-            value={numAdults}
-            onChange={(e) => setNumAdults(+e.target.value)}
-          />
-        </label>
-        <label htmlFor="number of children">
-          <input
-            type="number"
-            value={numChildren}
-            onChange={(e) => setNumChildren(+e.target.value)}
-          />
-        </label>
-      </form>
+      <FormFilters
+        handleSubmit={handleSubmit}
+        updateFilters={setFilters}
+        ratingArr={ratingArr}
+      />
       <div>
-        {hotels
-          .filter((hotel) => +hotel.starRating >= starRating)
+        {data
+          ?.filter((hotel) => +hotel.starRating >= filters.starRating)
           .map((hotel) => (
-            <Hotel
+            <HotelErrorBd
               key={hotel.id}
               id={hotel.id}
               name={hotel.name}
               images={hotel.images}
-              numberAdults={numAdults}
-              numberChildren={numChildren}
+              numberAdults={filters.numAdults}
+              numberChildren={filters.numChildren}
             />
           ))}
       </div>
@@ -59,4 +48,12 @@ const HomePage = () => {
   );
 };
 
-export default HomePage;
+function HomePageErrorBd() {
+  return (
+    <ErrorBoundary errorMessage={<h4> Something went wrong.</h4>}>
+      <HomePage />
+    </ErrorBoundary>
+  );
+}
+
+export default HomePageErrorBd;

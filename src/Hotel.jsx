@@ -1,20 +1,34 @@
-import useHotels from "./customHooks/useHotels";
+import { useQuery } from "@tanstack/react-query";
 import { Link } from "react-router-dom";
+import fetchRoomTypes from "./customHooks/fetchRoomTypes";
+import PhotosGallery from "./PhotosGallery";
+import HotelDetails from "./HotelDetails";
+import ErrorBoundary from "./ErrorBoundary";
 
 const Hotel = ({ id, name, images, numberAdults, numberChildren }) => {
-  const [hotels, loading] = useHotels(`roomRates/OBMNG/${id}`);
+  const { data, isLoading, isError } = useQuery(["rooms", id], fetchRoomTypes);
+
+  const hotelRooms = data?.rooms;
+
+  if (isLoading) {
+    return <p>loading...</p>;
+  }
+  if (isError) {
+    throw new Error("Error while fetching room types");
+  }
 
   return (
     <div key={id}>
-      <img src={`${images[0].url}`} />
       <Link to={`/details/${id}`}>
         <h4>{name}</h4>
+        <HotelDetails name={name} />
+        <PhotosGallery images={images} />
       </Link>
 
       <div>
-        {hotels.rooms ? (
+        {hotelRooms ? (
           <div>
-            {hotels.rooms
+            {hotelRooms
               .filter(
                 (room) =>
                   room.occupancy.maxChildren >= numberChildren &&

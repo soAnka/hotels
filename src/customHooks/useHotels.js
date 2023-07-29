@@ -11,6 +11,10 @@ export default function useHotels(url) {
 
     async function requestHotels() {
       const res = await fetch(basicURL + url);
+      if (!res.ok) {
+        throw new Error("Error while fetching hotels.");
+      }
+
       const dataResp = await res.json();
 
       setHotels(dataResp);
