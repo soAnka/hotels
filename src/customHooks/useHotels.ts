@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 
 const basicURL = "https://obmng.dbm.guestline.net/api/";
 
-export default function useHotels(url) {
+export default function useHotels(url: string) {
   const [hotels, setHotels] = useState([]);
   const [loading, setLoading] = useState(false);
 

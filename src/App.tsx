@@ -1,34 +1,31 @@
-import React from "react";
 import { createRoot } from "react-dom/client";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import HotelDetails from "./HotelDetails";
-import HomePageErrorBd from "./HomePage";
-
-const queryClient = new QueryClient({
-  defaultOptions: {
-    queries: {
-      staleTime: Infinity,
-      cacheTime: Infinity,
-    },
-  },
-});
+import HomePage from "./HomePage";
+import RoomDetails from "./RoomDetails";
+import { Provider } from "react-redux";
+import { store } from "./store/store";
 
 const App = () => {
   return (
     <BrowserRouter>
-      <QueryClientProvider client={queryClient}>
+      <Provider store={store}>
         <h2>Hotels</h2>
         <Routes>
           <Route path="/details/:id" element={<HotelDetails />} />
-          <Route path="/" element={<HomePageErrorBd />} />
+          <Route path="/details/:id/:roomId" element={<RoomDetails />} />
+          <Route path="/" element={<HomePage />} />
         </Routes>
-      </QueryClientProvider>
+      </Provider>
     </BrowserRouter>
   );
 };
 
 const rootApp = document.getElementById("app");
+
+if (!rootApp) {
+  throw new Error("No root App");
+}
 const container = createRoot(rootApp);
 container.render(<App />);
 
