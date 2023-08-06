@@ -1,5 +1,5 @@
 import { QueryFunction } from "@tanstack/react-query";
-import { RoomsResponse } from "../APIResponsesInterface";
+import { RoomsResponse } from "../typesAndInterfaces/APIResponsesInterface";
 
 const basicURL = "https://obmng.dbm.guestline.net/api/";
 

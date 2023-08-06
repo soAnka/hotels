@@ -1,5 +1,5 @@
 import { Component, MouseEvent } from "react";
-import { Image } from "./APIResponsesInterface";
+import { Image } from "../typesAndInterfaces/APIResponsesInterface";
 
 interface PhotoGalleryProps {
   images: Image[];
@@ -29,7 +29,7 @@ class PhotosGallery extends Component<PhotoGalleryProps> {
     return (
       <>
         <div
-          className="h-full"
+          className="h-[30rem] w-full rounded-lg border-2 border-white shadow-2xl  shadow-slate-500"
           style={{
             backgroundImage: `url(${images[isActive].url})`,
             backgroundRepeat: "no-repeat",
@@ -37,7 +37,7 @@ class PhotosGallery extends Component<PhotoGalleryProps> {
             backgroundPosition: "start",
           }}
         ></div>
-        <div className="photo_gallery flex">
+        <div className="photo_gallery mt-4 flex">
           {images.map((photo, index) => (
             <img
               key={index}
@@ -46,7 +46,11 @@ class PhotosGallery extends Component<PhotoGalleryProps> {
               src={photo.url}
               width={100}
               height={100}
-              className={isActive === index ? "border-2 border-indigo-600" : ""}
+              className={
+                isActive === index
+                  ? "m-1 scale-125 rounded-2xl border-2 border-white  duration-[500ms] ease-in-out"
+                  : "m-1 cursor-pointer rounded-2xl"
+              }
             />
           ))}
         </div>

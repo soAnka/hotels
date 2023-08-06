@@ -1,5 +1,5 @@
 import { QueryFunction } from "@tanstack/react-query";
-import { dataHotels } from "../APIResponsesInterface";
+import { dataHotels } from "../typesAndInterfaces/APIResponsesInterface";
 
 const fetchHotels: QueryFunction<dataHotels> = async () => {
   const res = await fetch(

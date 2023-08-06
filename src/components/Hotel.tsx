@@ -1,13 +1,8 @@
 import { Link } from "react-router-dom";
-import { Image, Room } from "./APIResponsesInterface";
+import { Image, Room } from "../typesAndInterfaces/APIResponsesInterface";
 import { AiFillStar } from "react-icons/ai";
-import { useSelector } from "react-redux";
-import { RootState } from "./store/store";
-import { useEffect, useState } from "react";
-
-type HotelRecord = {
-  [index: string]: HotelRoomsType;
-};
+import { useGetRoomsQuery } from "../store/apiSlice";
+import RoomCard from "./RoomCard";
 
 export type HotelRoomsType = {
   rooms: Room[];
@@ -19,8 +14,7 @@ export interface HotelProps {
   address2: string;
   images: Image[];
   stars: number;
-  loading: string;
-  hotelRooms: HotelRecord;
+  loading?: string;
   numberAdults: number;
   numberChildren: number;
 }
@@ -31,36 +25,21 @@ const Hotel = ({
   address,
   address2,
   images,
-  loading,
   stars,
   numberAdults,
   numberChildren,
 }: HotelProps) => {
-  const [isLoading, setIsLoading] = useState("");
-  const { rooms } = useSelector((state: RootState) => state.rooms);
+  const { data } = useGetRoomsQuery(id);
 
-  useEffect(() => {
-    setIsLoading(loading);
-  }, [loading]);
-
-  if (isLoading !== "succeeded") {
-    return <p>loading</p>;
-  }
-
-  let key: keyof typeof rooms = id;
-
-  const hotelFiltered = rooms
-    ? rooms[key].rooms.filter(
-        (room: Room) =>
-          room.occupancy.maxChildren >= numberChildren &&
-          room.occupancy.maxAdults >= numberAdults
-      )
-    : [];
-
+  const filtered = data?.rooms?.filter(
+    (room: Room) =>
+      room.occupancy.maxChildren >= numberChildren &&
+      room.occupancy.maxAdults >= numberAdults
+  );
   return (
     <div
       key={id}
-      className="min-h-80 m-1 flex h-96 max-h-full w-full items-start  justify-start rounded-lg border bg-white text-sm shadow-lg shadow-slate-200"
+      className="min-h-80 m-1 flex h-96 max-h-full w-full items-start justify-start rounded-lg border bg-white text-sm shadow-lg shadow-slate-200"
     >
       <Link to={`/details/${id}`} className="h-full w-6/12 cursor-pointer">
         <div
@@ -92,23 +71,23 @@ const Hotel = ({
         </Link>
         <div className="py-2 font-thin">
           <p className="pb-2 font-medium tracking-wide">Available Rooms:</p>
-          <div>
-            {hotelFiltered?.length !== 0 ? (
-              hotelFiltered?.map((room: Room) => (
-                <div key={room.id} className="column flex">
-                  <Link
-                    to={`/details/:${id}/:${room.id}`}
-                    key={room.id}
-                    className="p-0.25 cursor-pointer hover:font-medium hover:text-icon-primary"
-                  >
-                    {room.name}
-                  </Link>
+          {data?.rooms && (
+            <div>
+              {filtered?.length !== 0 ? (
+                <div>
+                  {filtered.map((room: Room) => (
+                    <div key={room.id} className="column flex">
+                      <RoomCard key={room.id} room={room}>
+                        {room.name}
+                      </RoomCard>
+                    </div>
+                  ))}
                 </div>
-              ))
-            ) : (
-              <p>No rooms matching children and/or adults criteria</p>
-            )}
-          </div>
+              ) : (
+                <p>No rooms matching children and/or adults criteria</p>
+              )}
+            </div>
+          )}
         </div>
       </div>
     </div>

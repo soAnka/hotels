@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { dataHotels } from "../APIResponsesInterface";
+import { dataHotels } from "../typesAndInterfaces/APIResponsesInterface";
 import { createAsyncThunk } from "@reduxjs/toolkit";
 
 export const fetchAllHotels = createAsyncThunk("hotels", async () => {
@@ -25,7 +25,22 @@ const initialState: HotelsState = {
 export const hotelsSlice = createSlice({
   name: "hotels",
   initialState,
-  reducers: {},
+  reducers: {
+    loadHotelDetails(state, action) {
+      return {
+        ...state,
+        hotels: state.hotels.filter((h) => h.id === action.payload.id),
+      };
+    },
+    filterHotels(state, action) {
+      return {
+        ...state,
+        hotels: state.hotels.filter(
+          (h) => h.starRating >= action.payload.starRating
+        ),
+      };
+    },
+  },
 
   extraReducers: (builder) => {
     builder.addCase(fetchAllHotels.fulfilled, (state, action) => {
@@ -44,4 +59,5 @@ export const hotelsSlice = createSlice({
   },
 });
 
+export const { loadHotelDetails } = hotelsSlice.actions;
 export default hotelsSlice.reducer;

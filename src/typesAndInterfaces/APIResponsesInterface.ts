@@ -12,6 +12,7 @@ interface Coordinates {
 export interface IHotel {
   address1: string;
   address2: string;
+  rooms: Room[];
   checkInHours: string;
   checkInMinutes: string;
   checkOutHours: string;
@@ -53,7 +54,7 @@ interface Occupancy {
   maxOverall: number;
 }
 export interface Room {
-  bedConfiguration: "Twin";
+  bedConfiguration: string;
   disabledAccess: boolean;
   facilities: RoomFacility[];
   id: string;

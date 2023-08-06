@@ -1,22 +1,42 @@
 import { createRoot } from "react-dom/client";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import HotelDetails from "./HotelDetails";
-import HomePage from "./HomePage";
-import RoomDetails from "./RoomDetails";
-import { Provider } from "react-redux";
-import { store } from "./store/store";
+import HomePage from "./components/HomePage";
+import { ApiProvider } from "@reduxjs/toolkit/dist/query/react";
+import { hotelsApi } from "./store/apiSlice";
+import { useState } from "react";
+import HotelDetails from "./components/HotelDetails";
+import RoomDetails from "./components/RoomDetails";
+import { FormDataType } from "./components/FormFilters";
 
 const App = () => {
+  const [hotels, setHotels] = useState<null>(null);
+  const [filters, setFilters] = useState<FormDataType>({
+    starRating: 1,
+    numAdults: 0,
+    numChildren: 0,
+  });
+
+  const handleSubmit = (formData: FormDataType) => {
+    setFilters(formData);
+    console.log(formData);
+  };
+
   return (
     <BrowserRouter>
-      <Provider store={store}>
+      <ApiProvider api={hotelsApi}>
         <h2>Hotels</h2>
         <Routes>
-          <Route path="/details/:id" element={<HotelDetails />} />
-          <Route path="/details/:id/:roomId" element={<RoomDetails />} />
-          <Route path="/" element={<HomePage />} />
+          <Route
+            path="/"
+            element={<HomePage handleSubmit={handleSubmit} filters={filters} />}
+          />
+          <Route
+            path="/details/:id"
+            element={<HotelDetails filters={filters} />}
+          />
+          {/* <Route path="/details/:id/:roomId" element={<RoomDetails />} /> */}
         </Routes>
-      </Provider>
+      </ApiProvider>
     </BrowserRouter>
   );
 };

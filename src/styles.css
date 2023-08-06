@@ -6,4 +6,23 @@
   :root {
     --color-icon-primary: 159 115 9;
   }
+
+  input[type="number"]::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+  }
+  input[type="number"]::-moz-appearance {
+    -moz-appearance: textfield;
+  }
+}
+
+@layer components {
+  #roomModal {
+    @apply fixed inset-0 z-10 flex w-full items-center justify-center bg-gray-800/75;
+  }
+  #roomModal:empty {
+    @apply hidden;
+  }
+  #roomModal > div {
+    @apply absolute left-1/2 top-1/2 flex h-1/2 w-full max-w-xl -translate-y-1/2 -translate-x-1/2 flex-col items-center rounded-2xl bg-white p-4;
+  }
 }

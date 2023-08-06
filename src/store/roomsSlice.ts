@@ -1,6 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { createAsyncThunk } from "@reduxjs/toolkit";
-import { HotelRoomsType } from "../Hotel";
+import { HotelRoomsType } from "../components/Hotel";
 
 export const fetchHotelRooms = createAsyncThunk("rooms", async (id: string) => {
   const res = await fetch(
@@ -27,7 +27,27 @@ const initialState: RoomsState = {
 export const roomsSlice = createSlice({
   name: "rooms",
   initialState,
-  reducers: {},
+  reducers: {
+    filterRooms(state, action) {
+      let key: keyof typeof state.rooms = action.payload.id;
+
+      return {
+        ...state,
+        rooms: {
+          ...state.rooms,
+          [action.payload.id]: {
+            ...state.rooms[action.payload.id],
+            rooms: state.rooms[action.payload.id].rooms.filter(
+              (r) =>
+                r.occupancy.maxChildren >= action.payload.numberChildren &&
+                r.occupancy.maxChildren >= action.payload.numberAdults
+            ),
+          },
+        },
+        loading: "succeeded",
+      };
+    },
+  },
 
   extraReducers: (builder) => {
     builder.addCase(fetchHotelRooms.fulfilled, (state, action) => {
@@ -42,6 +62,7 @@ export const roomsSlice = createSlice({
         loading: "succeeded",
       };
     });
+
     builder.addCase(fetchHotelRooms.pending, (state) => {
       state.loading = "pending";
     }),
@@ -51,5 +72,5 @@ export const roomsSlice = createSlice({
       });
   },
 });
-
+export const { filterRooms } = roomsSlice.actions;
 export default roomsSlice.reducer;
