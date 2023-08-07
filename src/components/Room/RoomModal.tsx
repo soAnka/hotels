@@ -2,7 +2,7 @@ import { PropsWithChildren, ReactNode, useEffect, useRef } from "react";
 import { createPortal } from "react-dom";
 
 type ModalType = PropsWithChildren<{
-  children: ReactNode | HTMLDivElement | any;
+  children: ReactNode | HTMLDivElement;
 }>;
 
 const RoomModal = ({ children }: ModalType) => {
@@ -20,7 +20,10 @@ const RoomModal = ({ children }: ModalType) => {
     };
   }, []);
 
-  return createPortal(<div>{children}</div>, el.current);
+  return createPortal(
+    <div className="relative w-full">{children}</div>,
+    el.current
+  );
 };
 
 export default RoomModal;

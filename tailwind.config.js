@@ -5,17 +5,16 @@ module.exports = {
     extend: {
       backgroundImage: {
         "homepage-banner": "url('/src/assets/main_banner.jpg')",
+        "error-illustration": "url('/src/assets/error_illustration.jpg)",
       },
       height: {
         128: "30rem",
       },
+      minHeight: {
+        "1/2": "600px",
+      },
       colors: {
-        icon: {
-          primary: "#a87700",
-        },
-        background: {
-          primary: "#b9ae94",
-        },
+        primary: "#a87700",
       },
       transitionDuration: {
         1500: "1500ms",

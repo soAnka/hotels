@@ -1,8 +1,11 @@
 import { FormDataType } from "./FormFilters";
 import { IHotel } from "../typesAndInterfaces/APIResponsesInterface";
-import Hotel from "./Hotel";
+import Hotel from "./Hotel/Hotel";
 import { useGetAllHotelsQuery } from "../store/apiSlice";
 import FormFilters from "./FormFilters";
+import Banner from "./Banner";
+import ErrorBoundary from "../ErrorBoundary";
+import Spinner from "./Spinner";
 
 const ratingArr = [1, 2, 3, 4, 5];
 
@@ -12,21 +15,23 @@ interface HomePageProps {
 }
 
 const HomePage = ({ handleSubmit, filters }: HomePageProps) => {
-  const { data } = useGetAllHotelsQuery("OBMNG");
+  const { data, error, isLoading } = useGetAllHotelsQuery("OBMNG");
+
+  if (error) {
+    throw new Error("Error");
+  }
+
+  if (isLoading) {
+    return <Spinner />;
+  }
 
   return (
     <>
       <div className="relative m-0 h-full w-screen">
-        <div className="m-0 h-[25rem] w-full bg-[url('../assets/main_banner.jpg')] bg-cover bg-center bg-no-repeat text-left text-black">
-          <div className={` m-0 h-full w-full`}>
-            <div className="flex h-full w-full flex-col justify-center  p-8 pl-16 lg:w-3/5 2xl:w-2/5">
-              <h4 className="p-4 text-6xl">Best Hotels This Week!</h4>
-              <p className="w-3/4 p-4 text-base font-thin text-slate-500">
-                Lorem ipsum
-              </p>
-            </div>
-          </div>
-        </div>
+        <Banner
+          title="Find your hotel"
+          description="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris"
+        />
         <FormFilters handleSubmit={handleSubmit} ratingArr={ratingArr} />
         <div>
           {data && (
@@ -58,4 +63,12 @@ const HomePage = ({ handleSubmit, filters }: HomePageProps) => {
   );
 };
 
-export default HomePage;
+function HomePageErrorB(props: HomePageProps) {
+  return (
+    <ErrorBoundary errorMessage={<h4>Something went wrong.</h4>}>
+      <HomePage {...props} />
+    </ErrorBoundary>
+  );
+}
+
+export default HomePageErrorB;

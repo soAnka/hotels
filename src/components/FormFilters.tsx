@@ -67,7 +67,7 @@ const FormFilters = ({ handleSubmit, ratingArr }: FormFiltersProps) => {
   return (
     <form
       onSubmit={submitHandler}
-      className="column absolute left-0 right-0 top-80 m-auto flex h-40 w-8/12 items-center justify-center rounded-3xl bg-gray-200 shadow-xl shadow-slate-400 "
+      className="column absolute top-[450px] left-0 right-0 m-auto flex h-40 w-8/12 items-center justify-center rounded-3xl bg-gray-200 shadow-xl shadow-slate-400 "
     >
       <div className="m-4 flex flex-col">
         <label htmlFor="star rating" className="pb-2">

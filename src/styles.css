@@ -23,6 +23,6 @@
     @apply hidden;
   }
   #roomModal > div {
-    @apply absolute left-1/2 top-1/2 flex h-1/2 w-full max-w-xl -translate-y-1/2 -translate-x-1/2 flex-col items-center rounded-2xl bg-white p-4;
+    @apply absolute left-1/2 top-1/2 flex h-auto min-h-[600px] w-1/2 max-w-xl -translate-y-1/2 -translate-x-1/2 flex-col items-center rounded-2xl bg-white p-4 shadow-xl shadow-gray-800;
   }
 }

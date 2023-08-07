@@ -1,5 +1,5 @@
 import { Component, MouseEvent } from "react";
-import { Image } from "../typesAndInterfaces/APIResponsesInterface";
+import { Image } from "../../typesAndInterfaces/APIResponsesInterface";
 
 interface PhotoGalleryProps {
   images: Image[];

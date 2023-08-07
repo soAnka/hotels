@@ -1,13 +1,11 @@
 import { Link } from "react-router-dom";
-import { Image, Room } from "../typesAndInterfaces/APIResponsesInterface";
+import { Image, Room } from "../../typesAndInterfaces/APIResponsesInterface";
 import { AiFillStar } from "react-icons/ai";
-import { useGetRoomsQuery } from "../store/apiSlice";
-import RoomCard from "./RoomCard";
+import { useGetRoomsQuery } from "../../store/apiSlice";
+import RoomCard from "../Room/RoomCard";
+import Spinner from "../Spinner";
 
-export type HotelRoomsType = {
-  rooms: Room[];
-};
-export interface HotelProps {
+interface HotelProps {
   id: string;
   name: string;
   address: string;
@@ -29,7 +27,15 @@ const Hotel = ({
   numberAdults,
   numberChildren,
 }: HotelProps) => {
-  const { data } = useGetRoomsQuery(id);
+  const { data, error, isLoading } = useGetRoomsQuery(id);
+
+  if (error) {
+    throw new Error("Error");
+  }
+
+  if (isLoading) {
+    return <Spinner />;
+  }
 
   const filtered = data?.rooms?.filter(
     (room: Room) =>
@@ -54,7 +60,7 @@ const Hotel = ({
       </Link>
 
       <div className="p-4">
-        <Link to={`/details/${id}`} className="cursor-pointer">
+        <Link to={`/details/${id}`} className="cursor-pointe">
           <div className="py-2">
             <div className="flex items-center justify-start">
               <h4 className="text-xl font-bold">{name}</h4>
