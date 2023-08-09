@@ -20,7 +20,6 @@ const HomePage = ({ handleSubmit, filters }: HomePageProps) => {
   if (error) {
     throw new Error("Error");
   }
-
   if (isLoading) {
     return <Spinner />;
   }
@@ -35,21 +34,31 @@ const HomePage = ({ handleSubmit, filters }: HomePageProps) => {
         <FormFilters handleSubmit={handleSubmit} ratingArr={ratingArr} />
         <div>
           {data && (
-            <div className="grid grid-cols-1 gap-2 p-20 pt-36 sm:grid-cols-1 md:grid-cols-2 ">
+            <div className="grid grid-cols-1 gap-2 p-5 sm:grid-cols-1 md:grid-cols-2 md:p-10 lg:p-20 lg:pt-36 ">
               {data
                 .filter(
                   (hotel: IHotel) => +hotel.starRating >= filters.starRating
                 )
                 .map((hotel: IHotel) => {
+                  const {
+                    id,
+                    name,
+                    address1,
+                    address2,
+                    town,
+                    images,
+                    starRating,
+                  } = hotel;
                   return (
                     <Hotel
-                      key={hotel.id}
-                      id={hotel.id}
-                      name={hotel.name}
-                      address={hotel.address1}
-                      address2={hotel.address2}
-                      images={hotel.images}
-                      stars={+hotel.starRating}
+                      key={id}
+                      id={id}
+                      name={name}
+                      address={address1}
+                      address2={address2}
+                      town={town}
+                      images={images}
+                      stars={+starRating}
                       numberAdults={filters.numAdults}
                       numberChildren={filters.numChildren}
                     />

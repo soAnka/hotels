@@ -16,13 +16,79 @@
 }
 
 @layer components {
+  .hotel_card {
+    @apply m-1 flex h-96 min-h-fit w-full items-start justify-start rounded-lg border bg-white text-sm shadow-lg shadow-slate-200;
+  }
+  .hotel_card_photo {
+    @apply bg-cover bg-top bg-no-repeat lg:bg-cover;
+  }
+
+  .hotel_info--card .hotel_name {
+    @apply font-serif text-xl font-bold;
+  }
+  .hotel_info--card .hotel_address,
+  .hotel_info--details .hotel_address {
+    @apply font-thin italic text-slate-700;
+  }
+
+  .hotel_info--details .hotel_name {
+    @apply font-serif text-2xl font-bold;
+  }
+  .hotel_info--details .hotel_description {
+    @apply mt-4 mb-4 font-light text-slate-700;
+  }
+
+  .available_rooms_container {
+    @apply flex flex-wrap py-4 font-light text-slate-700;
+  }
+  .available_rooms_container h3 {
+    @apply mt-4;
+  }
+  .available_rooms_container > div {
+    @apply w-full sm:w-full md:w-60 lg:w-64;
+  }
+  .available_rooms_card {
+    @apply w-full justify-start border border-slate-800 p-2;
+  }
+
+  .room_info_container {
+    @apply flex-col;
+  }
+  .room_icons_container {
+    @apply flex w-full flex-col items-start justify-center;
+  }
+  .room_info_icons {
+    @apply flex;
+  }
+  .room_info_icons .icons_box {
+    @apply mr-3 flex items-center;
+  }
+  .room_info_description {
+    @apply mt-4 text-center font-light text-gray-700;
+  }
+
   #roomModal {
     @apply fixed inset-0 z-10 flex w-full items-center justify-center bg-gray-800/75;
+  }
+  #roomModal .room_info_container {
+    @apply p-8;
+  }
+  #roomModal .room_icons_container {
+    @apply items-center;
   }
   #roomModal:empty {
     @apply hidden;
   }
   #roomModal > div {
-    @apply absolute left-1/2 top-1/2 flex h-auto min-h-[600px] w-1/2 max-w-xl -translate-y-1/2 -translate-x-1/2 flex-col items-center rounded-2xl bg-white p-4 shadow-xl shadow-gray-800;
+    @apply absolute left-1/2 top-1/2 flex h-auto min-h-[600px] w-full max-w-[460px] -translate-y-1/2 -translate-x-1/2 flex-col items-center rounded-2xl bg-white shadow-xl shadow-gray-800;
+  }
+  #roomModal .room_info_icons {
+    @apply mt-4;
+  }
+  #roomModal .room_info_icons .icons_box {
+    @apply rounded-xl border border-cyan-400 p-2;
+  }
+  #roomModal .room_info_name {
+    @apply m-4 text-center font-serif text-2xl font-medium;
   }
 }

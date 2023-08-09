@@ -34,7 +34,7 @@ const App = () => {
             }
           />
           <Route
-            path="/details/:id"
+            path="/details/:hotelId"
             element={<HotelDetails filters={filters} />}
           />
         </Routes>

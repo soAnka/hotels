@@ -67,9 +67,9 @@ const FormFilters = ({ handleSubmit, ratingArr }: FormFiltersProps) => {
   return (
     <form
       onSubmit={submitHandler}
-      className="column absolute top-[450px] left-0 right-0 m-auto flex h-40 w-8/12 items-center justify-center rounded-3xl bg-gray-200 shadow-xl shadow-slate-400 "
+      className="m-auto flex h-auto w-full flex-wrap items-center justify-center bg-gray-200 p-3 shadow-xl shadow-slate-400 lg:absolute lg:top-[490px] lg:left-0 lg:right-0 lg:max-w-[1000px] lg:flex-row lg:rounded-3xl"
     >
-      <div className="m-4 flex flex-col">
+      <div className="m-2 flex w-full flex-col lg:w-56">
         <label htmlFor="star rating" className="pb-2">
           <span className="flex items-center font-thin text-black">
             <AiFillStar style={{ color: "#37b0d4" }} className="mr-2" />
@@ -80,7 +80,7 @@ const FormFilters = ({ handleSubmit, ratingArr }: FormFiltersProps) => {
           value={filtersData.starRating}
           id="star rating"
           name="starRating"
-          className="h-12 w-60"
+          className="h-12 w-full"
           onChange={handleChangeData}
         >
           {ratingArr.map((star: number) => (
@@ -90,7 +90,7 @@ const FormFilters = ({ handleSubmit, ratingArr }: FormFiltersProps) => {
           ))}
         </select>
       </div>
-      <div className="mr-4 flex flex-col">
+      <div className="mr-2 flex w-auto flex-col ">
         <label htmlFor="number of adults" className="pb-2">
           <span className="flex items-center font-thin text-black">
             <BsFillPersonFill
@@ -103,7 +103,7 @@ const FormFilters = ({ handleSubmit, ratingArr }: FormFiltersProps) => {
         </label>
         <div className="flex">
           <input
-            className="h-12"
+            className="h-12 w-32"
             type="number"
             min={0}
             placeholder="Number of Adults"
@@ -125,7 +125,7 @@ const FormFilters = ({ handleSubmit, ratingArr }: FormFiltersProps) => {
           </button>
         </div>
       </div>
-      <div className="flex flex-col">
+      <div className="flex w-auto flex-col ">
         <label htmlFor="number of children" className="pb-2">
           <span className="flex items-center font-thin text-black">
             <FaBabyCarriage
@@ -138,7 +138,7 @@ const FormFilters = ({ handleSubmit, ratingArr }: FormFiltersProps) => {
         </label>
         <div className="flex">
           <input
-            className="h-12 w-44 border border-black p-2"
+            className="h-12 w-32 border border-black p-2"
             min={0}
             type="number"
             placeholder="Number of children"
@@ -162,7 +162,7 @@ const FormFilters = ({ handleSubmit, ratingArr }: FormFiltersProps) => {
       </div>
       <button
         type="submit"
-        className=" m-4 mt-11 w-48 rounded-full border-2 border-black p-4 text-black hover:bg-black hover:text-white"
+        className="my-6 ml-8 w-48 rounded-full border-2 border-black p-4 text-black hover:bg-black hover:text-white lg:mt-11"
       >
         search
       </button>

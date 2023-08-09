@@ -1,8 +1,8 @@
 import { PropsWithChildren, ReactNode, useState } from "react";
 import { Room } from "../../typesAndInterfaces/APIResponsesInterface";
-import RoomDetails from "./RoomDetails";
 import RoomModal from "./RoomModal";
 import { AiOutlineCloseCircle } from "react-icons/ai";
+import RoomInfo from "./RoomInfo";
 
 type RoomCardProps = PropsWithChildren<{
   room: Room;
@@ -37,8 +37,9 @@ const RoomCard = ({ room, children }: RoomCardProps) => {
       </button>
       {isModal.isShow ? (
         <RoomModal>
+          <div className="h-40 w-full rounded-t-2xl rounded-r-2xl bg-[url('../../assets/modal_photo.jpg')] bg-cover bg-center bg-no-repeat"></div>
           <button
-            className="absolute right-8 top-8"
+            className="absolute right-6 top-6"
             onClick={() =>
               setIsModal({
                 ...isModal,
@@ -47,9 +48,17 @@ const RoomCard = ({ room, children }: RoomCardProps) => {
               })
             }
           >
-            <AiOutlineCloseCircle fontSize={22} style={{ color: "#a87700" }} />
+            <AiOutlineCloseCircle fontSize={26} style={{ color: "#a87700" }} />
           </button>
-          <RoomDetails room={isModal.roomDetails} />
+          <div className="bg-black p-2 text-center text-xs font-light text-white">
+            ROOM DETAILS
+          </div>
+          <RoomInfo
+            name={room.name}
+            maxChildren={room.occupancy.maxChildren}
+            maxAdults={room.occupancy.maxAdults}
+            longDescription={room.longDescription}
+          />
         </RoomModal>
       ) : null}
     </>
