@@ -37,7 +37,7 @@ const RoomCard = ({ room, children }: RoomCardProps) => {
       </button>
       {isModal.isShow ? (
         <RoomModal>
-          <div className="h-40 w-full rounded-t-2xl rounded-r-2xl bg-[url('../../assets/modal_photo.jpg')] bg-cover bg-center bg-no-repeat"></div>
+          <div className="h-40 w-full rounded-t-2xl rounded-r-2xl bg-[url('../../images/modal_photo.jpg')] bg-cover bg-center bg-no-repeat"></div>
           <button
             className="absolute right-6 top-6"
             onClick={() =>

@@ -5,7 +5,7 @@ interface BannerProps {
 const Banner = ({ title, description }: BannerProps) => {
   return (
     <div
-      className={`"m-0 text-black" h-[35rem] w-full bg-[url("../assets/main_banner.jpg")] bg-cover bg-center bg-no-repeat text-left`}
+      className={`"m-0 text-black" h-[35rem] w-full bg-[url("../images/main_banner.jpg")] bg-cover bg-center bg-no-repeat text-left`}
     >
       <div className={` m-0 h-full w-full`}>
         <div className="flex h-full w-full flex-col justify-center  p-8 pl-16 lg:w-3/5 2xl:w-2/5">

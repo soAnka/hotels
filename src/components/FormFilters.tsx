@@ -9,6 +9,11 @@ export type FormDataType = {
   numChildren: number;
 };
 
+const maxAdults = 10;
+const minAdults = 1;
+const maxChildren = 10;
+const minChildren = 0;
+
 interface FormFiltersProps {
   handleSubmit: (formData: FormDataType) => void;
   ratingArr: number[];
@@ -46,7 +51,7 @@ const FormFilters = ({ handleSubmit, ratingArr }: FormFiltersProps) => {
     setFiltersData((prev) => {
       return {
         ...prev,
-        [inputName]: prev[`${key}`] - 1,
+        [inputName]: prev[key] === 0 ? 0 : prev[key] - 1,
       };
     });
   };
@@ -106,18 +111,21 @@ const FormFilters = ({ handleSubmit, ratingArr }: FormFiltersProps) => {
             className="h-12 w-32"
             type="number"
             min={0}
+            max={10}
             placeholder="Number of Adults"
             name="numAdults"
             value={filtersData.numAdults}
             onChange={handleChangeData}
           />
           <button
+            disabled={filtersData.numAdults <= minAdults}
             onClick={(e) => decrease(e, "numAdults")}
             className="h-12 w-12 border border-black"
           >
             -
           </button>
           <button
+            disabled={filtersData.numAdults >= maxAdults}
             onClick={(e) => increase(e, "numAdults")}
             className="h-12 w-12 border border-black"
           >
@@ -140,6 +148,7 @@ const FormFilters = ({ handleSubmit, ratingArr }: FormFiltersProps) => {
           <input
             className="h-12 w-32 border border-black p-2"
             min={0}
+            max={10}
             type="number"
             placeholder="Number of children"
             name="numChildren"
@@ -147,12 +156,14 @@ const FormFilters = ({ handleSubmit, ratingArr }: FormFiltersProps) => {
             value={filtersData.numChildren}
           />
           <button
+            disabled={filtersData.numChildren <= minChildren}
             onClick={(e) => decrease(e, "numChildren")}
             className="h-12 w-12 border border-black"
           >
             -
           </button>
           <button
+            disabled={filtersData.numChildren >= maxChildren}
             onClick={(e) => increase(e, "numChildren")}
             className="h-12 w-12 border border-black"
           >
